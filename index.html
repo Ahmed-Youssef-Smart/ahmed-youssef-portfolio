@@ -1,56 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Portfolio</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background: #f4f4f4;
-        color: #222;
-      }
-      .container {
-        max-width: 900px;
-        margin: 40px auto;
-        background: #fff;
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      }
-      .hero {
-        display: flex;
-        align-items: center;
-        gap: 24px;
-        flex-wrap: wrap;
-      }
-      img {
-        width: 220px;
-        height: 220px;
-        object-fit: cover;
-        border-radius: 50%;
-        border: 4px solid #ddd;
-      }
-      h1 {
-        margin-bottom: 8px;
-      }
-      p {
-        line-height: 1.6;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="hero">
-        <img src="my_pic.jpg" alt="My profile picture" />
-        <div>
-          <h1>Ahmed Youssef</h1>
-          <p>Portfolio website.</p>
-          <p>Replace this text with your bio, skills, projects, and contact info.</p>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ahmed Elsayed Youssef — Full-Stack Web Developer, Database Developer, and software solutions specialist.">
+  <title>Ahmed Elsayed Youssef | Web Developer</title>
+  <style>
+    :root {
+      --bg: #0b0d12; --panel: #121620; --text: #f4f7fb; --muted: #a6afbf;
+      --accent: #67e8f9; --accent-2: #c084fc; --accent-3: #f9a8d4;
+      --line: rgba(255,255,255,.12); --max: 1100px;
+      --pointer-x: 50vw; --pointer-y: 50vh;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Arial, sans-serif; line-height: 1.6; overflow-x: hidden; }
+    body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: .17;
+      background: radial-gradient(520px circle at var(--pointer-x) var(--pointer-y), rgba(103,232,249,.22), transparent 65%); }
+    .cursor-glow { position: fixed; width: 280px; height: 280px; border-radius: 50%; pointer-events: none; z-index: 0;
+      background: radial-gradient(circle, rgba(192,132,252,.12), rgba(103,232,249,.05) 42%, transparent 70%);
+      transform: translate(-50%, -50%); left: var(--pointer-x); top: var(--pointer-y); transition: opacity .25s; opacity: .8; }
+    .cursor-dot { position: fixed; left: var(--pointer-x); top: var(--pointer-y); width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 18px var(--accent); transform: translate(-50%,-50%); z-index: 20; pointer-events: none; }
+    .spark { position: fixed; z-index: 19; pointer-events: none; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--spark-color, var(--accent)); box-shadow: 0 0 12px var(--spark-color, var(--accent));
+      animation: spark-pop .65s ease-out forwards; }
+    @keyframes spark-pop { 0% { opacity: .95; transform: translate(0,0) scale(1); } 100% { opacity: 0; transform: translate(var(--dx),var(--dy)) scale(.1); } }
+    @keyframes floaty { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-9px) rotate(2deg); } }
+    @keyframes gradient-shift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+    @keyframes soft-pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(103,232,249,.0); } 50% { box-shadow: 0 0 0 7px rgba(103,232,249,.07); } }
+    .portrait-wrap { animation: floaty 6s ease-in-out infinite; }
+    .accent-gradient { color: transparent; background: linear-gradient(100deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent));
+      background-size: 250% auto; background-position: 0% 50%; background-clip: text; -webkit-background-clip: text; }
+    .btn.primary { box-shadow: 0 8px 28px rgba(103,232,249,.13); }
+    .btn.primary:hover { box-shadow: 0 10px 35px rgba(103,232,249,.28); }
+    .card { transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; position: relative; overflow: hidden; }
+    .card::after { content: ""; position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .25s;
+      background: radial-gradient(360px circle at var(--card-x, 50%) var(--card-y, 50%), rgba(103,232,249,.10), transparent 55%); }
+    .card:hover { transform: translateY(-6px); border-color: rgba(103,232,249,.55); box-shadow: 0 14px 38px rgba(0,0,0,.22); }
+    .card:hover::after { opacity: 1; }
+    .tag { transition: transform .2s ease, border-color .2s ease, color .2s ease, background .2s ease; }
+    .tag:hover { transform: translateY(-3px); border-color: var(--accent); color: var(--accent); background: rgba(103,232,249,.07); }
+    .portrait { transition: border-color .3s, box-shadow .3s; }
+    .portrait-wrap:hover .portrait { border-color: rgba(103,232,249,.6); box-shadow: 0 0 35px rgba(103,232,249,.13); }
+    .eyebrow { text-shadow: 0 0 20px rgba(103,232,249,.15); }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    .wrap { width: min(var(--max), calc(100% - 40px)); margin: auto; }
+    header { position: sticky; top: 0; z-index: 10; background: rgba(11,13,18,.88); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+    nav { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .logo { font-weight: 800; letter-spacing: -.04em; font-size: 1.12rem; }
+    .logo span, .accent { color: var(--accent); }
+    .navlinks { display: flex; gap: 24px; color: var(--muted); font-size: .92rem; }
+    .navlinks a:hover { color: var(--accent); }
+    .hero { min-height: 78vh; display: grid; grid-template-columns: 1.4fr .6fr; align-items: center; gap: 54px; padding-top: 72px; padding-bottom: 72px; }
+    .eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: .16em; font-size: .78rem; font-weight: 750; }
+    h1 { font-size: clamp(2.8rem, 7vw, 5.6rem); line-height: .98; letter-spacing: -.065em; margin: 18px 0; }
+    .hero h2 { font-size: clamp(1.25rem, 2.6vw, 2rem); font-weight: 550; color: #d6dce6; line-height: 1.35; max-width: 650px; margin: 0 0 18px; }
+    p { color: var(--muted); }
+    .intro { max-width: 650px; font-size: 1.05rem; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; border-radius: 10px; padding: 12px 18px; border: 1px solid var(--line); font-weight: 700; cursor: pointer; transition: transform .2s, border-color .2s; }
+    .btn:hover { transform: translateY(-2px); border-color: var(--accent); }
+    .btn.primary { background: var(--accent); color: #071116; border-color: var(--accent); }
+    .portrait-wrap { position: relative; max-width: 330px; justify-self: end; width: 100%; }
+    .portrait { display: block; width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 24px; background: #1c2430; border: 1px solid var(--line); }
+    .photo-fallback { width: 100%; aspect-ratio: 4/5; border-radius: 24px; border: 1px solid var(--line);
+      background: radial-gradient(circle at 25% 20%, rgba(192,132,252,.28), transparent 38%), linear-gradient(145deg,#202b3a,#121620 72%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+    .placeholder-initials { font-size: clamp(3rem, 8vw, 5rem); font-weight: 850; letter-spacing: -.08em; color: var(--accent); }
+    .placeholder-caption { color: var(--muted); font-size: .72rem; letter-spacing: .18em; }
+    section { padding: 78px 0; border-top: 1px solid var(--line); }
+    .section-head { margin-bottom: 28px; }
+    .section-head h2 { font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -.05em; margin: 5px 0; }
+    .section-head p { margin: 0; max-width: 650px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .card { padding: 24px; border: 1px solid var(--line); background: var(--panel); border-radius: 16px; }
+    .card h3 { margin: 8px 0; font-size: 1.15rem; }
+    .card p { margin: 0; }
+    .icon { color: var(--accent); font-size: 1.3rem; }
+    .skills { display: flex; flex-wrap: wrap; gap: 10px; }
+    .tag { border: 1px solid var(--line); color: #dce3ed; border-radius: 999px; padding: 8px 13px; font-size: .9rem; background: rgba(255,255,255,.025); }
+    .project-top { display: flex; justify-content: space-between; gap: 12px; align-items: start; }
+    .project-num { color: var(--accent); font-size: .82rem; }
+    .contact-box { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 30px; border-radius: 20px; border: 1px solid var(--line); background: linear-gradient(135deg, #151c27, #10131a); }
+    .contact-box h3 { font-size: clamp(1.5rem, 3vw, 2.4rem); line-height: 1.15; margin: 0; letter-spacing: -.04em; }
+    footer { padding: 26px 0; color: var(--muted); font-size: .85rem; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    @media (hover: none), (pointer: coarse) {
+      .cursor-glow, .cursor-dot { display: none; }
+      body::before { opacity: .08; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+      .cursor-glow, .cursor-dot { display: none; }
+    }
+    @media (max-width: 760px) {
+      .wrap { width: min(var(--max), calc(100% - 28px)); }
+      .navlinks { gap: 12px; font-size: .8rem; }
+      .hero { grid-template-columns: 1fr; gap: 30px; min-height: auto; padding-top: 58px; }
+      .portrait-wrap { justify-self: start; max-width: 230px; }
+      .grid { grid-template-columns: 1fr; }
+      section { padding: 58px 0; }
+      .contact-box { align-items: start; flex-direction: column; }
+    }
+    @media (max-width: 430px) { .navlinks a:nth-child(2) { display: none; } h1 { font-size: 2.8rem; } }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="wrap" aria-label="Main navigation">
+      <a class="logo" href="#home">Ahmed Youssef<span>.</span></a>
+      <div class="navlinks">
+        <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="cursor-glow" aria-hidden="true"></div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="wrap hero" id="home">
+      <div class="hero-copy">
+        <div class="eyebrow">Web Developer · Software Solutions</div>
+        <h1>Hi, I'm <span class="accent-gradient">Ahmed.</span></h1>
+        <h2>I build useful web applications, reliable backends, and database-driven business systems.</h2>
+        <p class="intro">Full-Stack Web Developer | SQL Server Database Developer | Cisco CCNA</p>
+        <div class="actions">
+          <a class="btn primary" href="#projects">Explore my work ↗</a>
+          <a class="btn" href="#contact">Get in touch</a>
         </div>
       </div>
+      <div class="portrait-wrap">
+        <!-- Put your photo beside index.html and name it my_pic.jpg -->
+        <img id="profilePhoto" class="portrait" src="my_pic.jpg" alt="Ahmed Elsayed Youssef profile photo">
+      </div>
     </div>
-  </body>
+
+    <section id="about">
+      <div class="wrap">
+        <div class="section-head"><div class="eyebrow">A little about me</div><h2>Technology with a purpose.</h2></div>
+        <p class="intro">I'm Ahmed Elsayed Youssef, a web developer focused on building practical software solutions for businesses. My interests include full-stack web development, backend APIs, database design, desktop applications, and secure web authentication.</p>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="wrap">
+        <div class="section-head"><div class="eyebrow">What I work with</div><h2>Skills & technologies</h2><p>A practical mix of web development, backend, database, and application development skills.</p></div>
+        <div class="skills">
+          <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">PHP</span>
+          <span class="tag">Node.js</span><span class="tag">ASP.NET</span><span class="tag">SQL Server</span><span class="tag">MySQL</span>
+          <span class="tag">PostgreSQL</span><span class="tag">VB.NET</span><span class="tag">VB6</span><span class="tag">Git</span>
+          <span class="tag">GitHub</span><span class="tag">Web Authentication</span><span class="tag">Access Control</span><span class="tag">Cisco CCNA</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="wrap">
+        <div class="section-head"><div class="eyebrow">How I can help</div><h2>Services</h2></div>
+        <div class="grid">
+          <article class="card"><div class="icon">⌘</div><h3>Full-Stack Web Development</h3><p>Responsive websites and web applications tailored to business needs.</p></article>
+          <article class="card"><div class="icon">▤</div><h3>Backend & Database Development</h3><p>Backend logic, APIs, database structure, and data-driven workflows.</p></article>
+          <article class="card"><div class="icon">◇</div><h3>Web Authentication & Security</h3><p>Login flows, authorization, protected pages, and safer access patterns.</p></article>
+          <article class="card"><div class="icon">▦</div><h3>Business Software Solutions</h3><p>Systems that help organize attendance, HR, inventory, sales, and clinic operations.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="wrap">
+        <div class="section-head"><div class="eyebrow">Selected work</div><h2>Projects</h2><p>Replace these summaries with your real project details and links when ready.</p></div>
+        <div class="grid">
+          <article class="card"><div class="project-top"><span class="project-num">01 / BUSINESS SYSTEM</span><span class="icon">↗</span></div><h3>Attendance System</h3><p>Employee attendance tracking and reporting for day-to-day operations.</p></article>
+          <article class="card"><div class="project-top"><span class="project-num">02 / MANAGEMENT</span><span class="icon">↗</span></div><h3>HR & Inventory Systems</h3><p>Business tools for managing employee records, stock, and operational data.</p></article>
+          <article class="card"><div class="project-top"><span class="project-num">03 / SALES</span><span class="icon">↗</span></div><h3>Point of Sale (POS)</h3><p>Sales workflows and product records supported by a structured database.</p></article>
+          <article class="card"><div class="project-top"><span class="project-num">04 / WEB APPLICATION</span><span class="icon">↗</span></div><h3>Commercial Website & Clinic System</h3><p>Web presence and business-specific tools for service-based organizations.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <div class="contact-box">
+          <div><div class="eyebrow">Have a project in mind?</div><h3>Let's build something<br><span class="accent-gradient">useful together.</span></h3><p>Open to web development roles and software projects.</p></div>
+          <div class="actions">
+            <a class="btn primary" href="mailto:YOUR_EMAIL@example.com">Email me ↗</a>
+            <a class="btn" href="https://www.linkedin.com/in/ahmed-elsayedyoussef/" target="_blank" rel="noopener">LinkedIn ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap footer-inner"><span>© <span id="year"></span> Ahmed Elsayed Youssef</span><span>Designed simply. Built for the web.</span></div></footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // Modern cursor glow and tiny sparkles on click (desktop pointer only).
+    const root = document.documentElement;
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (finePointer && !reduceMotion) {
+      let lastSpark = 0;
+      window.addEventListener('pointermove', event => {
+        root.style.setProperty('--pointer-x', event.clientX + 'px');
+        root.style.setProperty('--pointer-y', event.clientY + 'px');
+        const now = performance.now();
+        if (now - lastSpark > 90 && Math.random() > .82) {
+          lastSpark = now;
+          const particle = document.createElement('span');
+          particle.className = 'spark';
+          particle.style.left = event.clientX + 'px';
+          particle.style.top = event.clientY + 'px';
+          particle.style.setProperty('--dx', (Math.random() * 42 - 21) + 'px');
+          particle.style.setProperty('--dy', (Math.random() * 42 - 21) + 'px');
+          particle.style.setProperty('--spark-color', ['#67e8f9', '#c084fc', '#f9a8d4'][Math.floor(Math.random() * 3)]);
+          document.body.appendChild(particle);
+          particle.addEventListener('animationend', () => particle.remove(), { once: true });
+        }
+      }, { passive: true });
+      document.addEventListener('click', event => {
+        if (event.target.closest('a, button, label')) return;
+        for (let i = 0; i < 5; i++) {
+          const particle = document.createElement('span');
+          const angle = (Math.PI * 2 * i) / 5;
+          particle.className = 'spark';
+          particle.style.left = event.clientX + 'px';
+          particle.style.top = event.clientY + 'px';
+          particle.style.setProperty('--dx', Math.cos(angle) * 34 + 'px');
+          particle.style.setProperty('--dy', Math.sin(angle) * 34 + 'px');
+          particle.style.setProperty('--spark-color', ['#67e8f9', '#c084fc', '#f9a8d4'][i % 3]);
+          document.body.appendChild(particle);
+          particle.addEventListener('animationend', () => particle.remove(), { once: true });
+        }
+      });
+      document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('pointermove', event => {
+          const rect = card.getBoundingClientRect();
+          card.style.setProperty('--card-x', (event.clientX - rect.left) + 'px');
+          card.style.setProperty('--card-y', (event.clientY - rect.top) + 'px');
+        });
+      });
+    }
+    // If my_pic.jpg is not present yet, show a styled placeholder.
+    const profilePhoto = document.getElementById('profilePhoto');
+    profilePhoto.addEventListener('error', () => {
+      const fallback = document.createElement('div');
+      fallback.className = 'photo-fallback';
+      fallback.innerHTML = '<span class="placeholder-initials">AY</span><span class="placeholder-caption">ADD my_pic.jpg</span>';
+      profilePhoto.replaceWith(fallback);
+    });
+
+  </script>
+</body>
 </html>
